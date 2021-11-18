@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  traefik:
+    image: traefik:2.5
+    ports: 
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - ./pluginproviderdemo:/plugins-local/src/github.com/traefik/pluginproviderdemo/
+    command:
+      - "--log.level=DEBUG"
+      - "--api.insecure=true"  
+      - "--entryPoints.web.address=:80"
+      - "--providers.plugin.exampleProvider.pollInterval=2s"
+      - "--experimental.localPlugins.exampleProvider.moduleName=github.com/traefik/pluginproviderdemo"
